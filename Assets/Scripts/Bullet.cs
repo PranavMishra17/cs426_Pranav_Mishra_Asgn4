@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour {
-
     private float time;
 
     void Start() {
@@ -11,8 +10,7 @@ public class Bullet : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         time += Time.deltaTime;
         if (time >= 4.0f) {
             Destroy(this.gameObject);

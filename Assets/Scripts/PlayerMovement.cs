@@ -15,12 +15,13 @@ public class PlayerMovement : NetworkBehaviour {
     [SerializeField] private Camera playerCamera;
 
     void Update() {        
-        if (this.IsOwner) { // makes sure the script is only executed on the owners 
+        if (this.IsOwner) { // makes sure the script is only executed on the owners
             Vector3 moveDirection = new Vector3(0, 0, 0);
             if (Input.GetKey(KeyCode.W)) {
                 moveDirection.z = +1f;
             }
             if (Input.GetKey(KeyCode.S)) {
+                Debug.Log(this);
                 moveDirection.z = -1f;
             }
             if (Input.GetKey(KeyCode.A)) {
@@ -29,7 +30,7 @@ public class PlayerMovement : NetworkBehaviour {
             if (Input.GetKey(KeyCode.D)) {
                 moveDirection.x = +1f;
             }
-            transform.position += moveDirection * speed * Time.deltaTime;
+            this.transform.position += Vector3.Normalize(moveDirection) * speed * Time.deltaTime;
 
             // If I is pressed spawn the object. If J is pressed destroy the object
             if (Input.GetKeyDown(KeyCode.I) && instantiatedPrefab == null) {
@@ -50,6 +51,7 @@ public class PlayerMovement : NetworkBehaviour {
 
     // this method is called when the object is spawned
     public override void OnNetworkSpawn() {
+        Debug.Log(this);
         // Set object color
         GetComponent<MeshRenderer>().material.color = colors[(int)OwnerClientId];
 

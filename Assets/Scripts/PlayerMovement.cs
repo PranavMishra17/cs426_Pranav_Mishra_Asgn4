@@ -5,53 +5,78 @@ using Unity.Netcode;
 
 public class PlayerMovement : NetworkBehaviour {
     public float speed = 2f;
+    public float rotationSpeed = 70f;
     public List<Color> colors = new List<Color>();
-    private GameObject instantiatedPrefab;
-    public GameObject cannon;
-    public GameObject bullet;
+    public GameObject hand;
 
-    [SerializeField] private GameObject spawnedPrefab;
     [SerializeField] private AudioListener audioListener;
     [SerializeField] private Camera playerCamera;
+    private Package dataPackage;
+
+    void Start() {
+        this.dataPackage = null;
+    }
 
     void Update() {        
-        if (this.IsOwner) { // makes sure the script is only executed on the owners 
+        if (this.IsOwner) { // makes sure the script is only executed on the owners
             Vector3 moveDirection = new Vector3(0, 0, 0);
+            Quaternion rotation = Quaternion.identity;
             if (Input.GetKey(KeyCode.W)) {
-                moveDirection.z = +1f;
+                moveDirection = this.transform.forward;
             }
             if (Input.GetKey(KeyCode.S)) {
-                moveDirection.z = -1f;
+                moveDirection = this.transform.forward * -1f;
             }
             if (Input.GetKey(KeyCode.A)) {
-                moveDirection.x = -1f;
+                rotation = Quaternion.Euler(0f, -1f * rotationSpeed * Time.deltaTime, 0f);
             }
             if (Input.GetKey(KeyCode.D)) {
-                moveDirection.x = +1f;
+                rotation = Quaternion.Euler(0f, rotationSpeed * Time.deltaTime, 0f);
             }
             transform.position += moveDirection * speed * Time.deltaTime;
+            transform.rotation *= rotation;
 
-            // If I is pressed spawn the object. If J is pressed destroy the object
-            if (Input.GetKeyDown(KeyCode.I) && instantiatedPrefab == null) {
-                instantiatedPrefab = Instantiate(spawnedPrefab);
-                instantiatedPrefab.GetComponent<NetworkObject>().Spawn(true);
-            } else if (Input.GetKeyDown(KeyCode.J) && instantiatedPrefab != null) {
-                instantiatedPrefab.GetComponent<NetworkObject>().Despawn(true);
-                Destroy(instantiatedPrefab);
-                instantiatedPrefab = null;
-            }
-
-            if (Input.GetButtonDown("Fire1")) {
-                // call the BulletSpawningServerRpc method since client can't spawn objects
-                BulletSpawningServerRpc(cannon.transform.position, cannon.transform.rotation);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                AttemptInteractServerRpc();
             }
         }
     }
 
+    [ServerRpc]
+    private void AttemptInteractServerRpc() {
+        if (this.dataPackage) {
+            this.dropPackage();
+        } else {
+            RaycastHit hit;
+            if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, 2f, LayerMask.GetMask("Interactables")))
+            {
+                this.dataPackage = hit.transform.gameObject.GetComponent<Package>();
+                if (this.dataPackage.hasHolder())
+                {
+                    return;
+                }
+                Debug.Log("Picked up package.");
+                this.dataPackage.setHolder(this.hand);
+            } else
+            {
+                Debug.Log("Miss");
+            }
+        }
+    }
+
+
+    public void dropPackage() {
+        Debug.Log("Dropping package.");
+        this.dataPackage.drop();
+        this.dataPackage = null;
+    }
+
     // this method is called when the object is spawned
     public override void OnNetworkSpawn() {
+        Debug.Log("Spawned player.");
         // Set object color
-        GetComponent<MeshRenderer>().material.color = colors[(int)OwnerClientId];
+        GetComponent<MeshRenderer>().material.color = colors[(int)this.OwnerClientId % colors.Count];
 
         // If the player is the owner, enable audioListener and playerCamera
         if (this.IsOwner) {
@@ -66,19 +91,5 @@ public class PlayerMovement : NetworkBehaviour {
             audioListener.enabled = true;
             playerCamera.enabled = true;
         }
-    }
-
-    // need to add the [ServerRPC] attribute
-    [ServerRpc]
-    private void BulletSpawningServerRpc(Vector3 position, Quaternion rotation) {  // method name must end with ServerRPC
-        // call the BulletSpawningClientRpc method to locally create the bullet on all clients
-        BulletSpawningClientRpc(position, rotation);
-    }
-
-    [ClientRpc]
-    private void BulletSpawningClientRpc(Vector3 position, Quaternion rotation) {
-        GameObject newBullet = Instantiate(bullet, position, rotation);
-        newBullet.GetComponent<Rigidbody>().velocity += Vector3.up * 2;
-        newBullet.GetComponent<Rigidbody>().AddForce(newBullet.transform.up * 1500);
     }
 }

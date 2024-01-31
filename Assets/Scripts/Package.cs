@@ -37,9 +37,9 @@ public class Package : NetworkBehaviour {
     }
 
     void Update() {
-        if (this.IsOwner)
+        time += Time.deltaTime;
+        if (this.IsServer)
         {
-            time += Time.deltaTime;
             if (this.isHeld)
             {
                 this.basePosition = this.holder.transform.position;
@@ -49,13 +49,8 @@ public class Package : NetworkBehaviour {
             {
                 this.transform.position = this.basePosition + (Vector3.up * (Mathf.Sin(this.time) * 0.35f));
             }
-
-            Quaternion rotation = this.transform.rotation * Quaternion.Euler(Time.deltaTime * 20, Time.deltaTime * 30, 0);
-            this.transform.rotation = rotation;
-        } else if (this.isHeld)
-        {
-            TransmitPositionInfoServerRpc(this.holder.transform.position);
-            // Host is both client and server. Objects owned by server by default. Only the owner of the network object can modify it.
         }
+        Quaternion rotation = this.transform.rotation * Quaternion.Euler(Time.deltaTime * 20, Time.deltaTime * 30, 0);
+        this.transform.rotation = rotation;
     }
 }

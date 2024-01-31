@@ -38,27 +38,33 @@ public class PlayerMovement : NetworkBehaviour {
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (this.dataPackage) {
-                    this.dropPackage();
-                } else {
-                    RaycastHit hit;
-                    if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, 2f, LayerMask.GetMask("Interactables")))
-                    {
-                        this.dataPackage = hit.transform.gameObject.GetComponent<Package>();
-                        if (this.dataPackage.hasHolder())
-                        {
-                            return;
-                        }
-                        Debug.Log("Picked up package.");
-                        this.dataPackage.setHolder(this.hand);
-                    } else
-                    {
-                        Debug.Log("Miss");
-                    }
-                }
+                AttemptInteractServerRpc();
             }
         }
     }
+
+    [ServerRpc]
+    private void AttemptInteractServerRpc() {
+        if (this.dataPackage) {
+            this.dropPackage();
+        } else {
+            RaycastHit hit;
+            if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, 2f, LayerMask.GetMask("Interactables")))
+            {
+                this.dataPackage = hit.transform.gameObject.GetComponent<Package>();
+                if (this.dataPackage.hasHolder())
+                {
+                    return;
+                }
+                Debug.Log("Picked up package.");
+                this.dataPackage.setHolder(this.hand);
+            } else
+            {
+                Debug.Log("Miss");
+            }
+        }
+    }
+
 
     public void dropPackage() {
         Debug.Log("Dropping package.");
@@ -68,6 +74,7 @@ public class PlayerMovement : NetworkBehaviour {
 
     // this method is called when the object is spawned
     public override void OnNetworkSpawn() {
+        Debug.Log("Spawned player.");
         // Set object color
         GetComponent<MeshRenderer>().material.color = colors[(int)this.OwnerClientId % colors.Count];
 

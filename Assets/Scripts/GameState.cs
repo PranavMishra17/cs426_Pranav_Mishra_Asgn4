@@ -10,13 +10,6 @@ public class GameState : MonoBehaviour
     void Start()
     {
         this.winMessage = GameObject.Find("NetworkManagerUI").transform.Find("WinMessage").gameObject;
-        if (winMessage == null)
-        {
-            Debug.Log("Win message was not found.");
-        } else
-        {
-            Debug.Log("Win message was found.");
-        }
         this.score = 0;
     }
 

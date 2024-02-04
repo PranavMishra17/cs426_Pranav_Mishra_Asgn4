@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ButtonLogic : MonoBehaviour
 {
-    private delegate void ChangeState();
+    private delegate void ChangeState(GameObject obj);
     private ChangeState onPress;
     private ChangeState onDepress;
     private int count;
@@ -14,24 +14,30 @@ public class ButtonLogic : MonoBehaviour
     public enum Functionality { OpenGate, UpdateGameState };
     [SerializeField] private Functionality buttonFunctionality;
 
-    private void OpenGateFunction()
+    private void OpenGateFunction(GameObject obj)
     {
         Debug.Log("Opening the gate.");
     }
 
-    private void CloseGateFunction()
+    private void CloseGateFunction(GameObject obj)
     {
         Debug.Log("Closing the gate.");
     }
 
-    private void IncrementFunction()
+    private void IncrementFunction(GameObject obj)
     {
-        gameState.IncrementScore();
+        if (obj.layer == LayerMask.NameToLayer("Interactables"))
+        {
+            gameState.IncrementScore();
+        }
     }
 
-    private void DecrementFunction()
+    private void DecrementFunction(GameObject obj)
     {
-        gameState.DecrementScore();
+        if (obj.layer == LayerMask.NameToLayer("Interactables"))
+        {
+            gameState.DecrementScore();
+        }
     }
 
     void Start()
@@ -51,25 +57,23 @@ public class ButtonLogic : MonoBehaviour
         }
     }
 
-    public void OnEnter()
+    public void OnEnter(GameObject obj)
     {
         this.count++;
         if (this.count == 1)
         {
             this.baseModel.GetComponent<MeshRenderer>().material.color = Color.green;
-            onPress();
+            onPress(obj);
         }
-        Debug.Log("Enter");
     }
 
-    public void OnExit()
+    public void OnExit(GameObject obj)
     {
         this.count--;
         if (this.count == 0)
         {
             this.baseModel.GetComponent<MeshRenderer>().material.color = Color.red;
-            onDepress();
+            onDepress(obj);
         }
-        Debug.Log("Exit");
     }
 }

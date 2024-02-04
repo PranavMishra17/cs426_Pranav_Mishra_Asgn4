@@ -7,19 +7,15 @@ public class ButtonCollider : MonoBehaviour
     void Start()
     {
         this.button = this.transform.parent.gameObject.GetComponent<ButtonLogic>();
-        if (this.button == null)
-        {
-            Debug.Log("Couldn't find parent button logic.");
-        }
     }
 
-    void OnTriggerEnter()
+    void OnTriggerEnter(Collider other)
     {
-        this.button.OnEnter();
+        this.button.OnEnter(other.gameObject);
     }
 
-    void OnTriggerExit()
+    void OnTriggerExit(Collider other)
     {
-        this.button.OnExit();
+        this.button.OnExit(other.gameObject);
     }
 }

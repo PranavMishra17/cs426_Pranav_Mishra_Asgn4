@@ -12,6 +12,7 @@ public class TPC : MonoBehaviour
     public float lookSpeed = 2.0f;
     public float lookXLimit = 60.0f;
 
+    public GameObject bloodSplatterPrefab;
     CharacterController characterController;
     Vector3 moveDirection = Vector3.zero;
     Vector2 rotation = Vector2.zero;
@@ -59,5 +60,33 @@ public class TPC : MonoBehaviour
             playerCameraParent.localRotation = Quaternion.Euler(rotation.x, 0, 0);
             transform.eulerAngles = new Vector2(0, rotation.y);
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collision");
+        if (collision.gameObject.tag == "Fan")
+        {
+            SpawnBloodSplatter();
+        }
+    }
+
+
+    void SpawnBloodSplatter()
+    {
+        Debug.Log("Blood Splatter called");
+        // Spawn the BloodSplatter particle effect at the trigger's position and rotation
+        GameObject bloodSplatter = Instantiate(bloodSplatterPrefab, transform.position, Quaternion.identity);
+
+        // Play the particle effect
+        var particleSystem = bloodSplatter.GetComponent<ParticleSystem>();
+        if (particleSystem != null)
+        {
+            particleSystem.Play();
+            Debug.Log("inside play called"+ particleSystem);
+        }
+
+        // Optionally, destroy the particle effect after its duration
+        //Destroy(bloodSplatter, particleSystem.main.duration);
     }
 }

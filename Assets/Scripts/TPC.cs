@@ -116,7 +116,6 @@ public class TPC : NetworkBehaviour
         this.dataPackage = null;
     }
 
-
     void SpawnBloodSplatter()
     {
         Debug.Log("Blood Splatter called");

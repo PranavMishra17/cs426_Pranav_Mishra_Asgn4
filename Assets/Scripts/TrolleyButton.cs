@@ -9,35 +9,37 @@ public class TrolleyButton : NetworkBehaviour
     public Transform pointA;   // Point A position
     public Transform pointB;   // Point B position
     public float moveSpeed = 5f; // Speed of the trolley
-    public float activationDistance = 3f; // Distance at which the button can be pressed
+    public float activationDistance = 7f; // Distance at which the button can be pressed
 
     // private bool movingToB = true; // Flag to indicate the direction of movement
     private NetworkVariable<bool> movingToB = new NetworkVariable<bool>(false);
 
-    void OnNetworkSpawn()
+    public override void OnNetworkSpawn()
     {
-        if (this.IsServer)
+        if (this.IsOwner)
         {
-            this.platform = pointA;
-            this.movingToB.Value = false;
+            this.platform.position = pointA.position;
         }
     }
 
     void Update()
     {
         // Check if the player is near the button
-        if (IsPlayerNear())
+        if (this.IsPlayerNear())
         {
             // Check if the button is pressed (You can replace "Fire1" with your input)
             if (Input.GetButtonDown("Fire1"))
             {
-                // Toggle the direction of movement when the button is pressed
-                movingToB.Value = !movingToB.Value;
+                this.ChangeDirectionServerRpc();
             }
         }
+        this.MovePlatform();
+    }
 
-        // Move the platform based on the direction
-        MovePlatform();
+    [ServerRpc(RequireOwnership = false)]
+    public void ChangeDirectionServerRpc()
+    {
+        this.movingToB.Value = !this.movingToB.Value;
     }
 
     bool IsPlayerNear()
@@ -45,7 +47,6 @@ public class TrolleyButton : NetworkBehaviour
         if (this.IsClient)
         {
             GameObject player = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject().gameObject;
-            // GameObject player = GameObject.FindGameObjectWithTag("Player");
 
             if (player != null)
             {
@@ -60,7 +61,17 @@ public class TrolleyButton : NetworkBehaviour
     void MovePlatform()
     {
         // Calculate the target position based on the direction
-        Transform targetPosition = movingToB.Value ? pointB : pointA;
+        Transform targetPosition;
+        if (this.movingToB.Value)
+        {
+            Debug.Log("Moving toward B");
+            targetPosition = pointB;
+        }
+        else
+        {
+            Debug.Log("Moving toward A");
+            targetPosition = pointA;
+        }
 
         // Move the platform towards the target position
         platform.position = Vector3.MoveTowards(platform.position, targetPosition.position, moveSpeed * Time.deltaTime);

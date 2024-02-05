@@ -24,11 +24,16 @@ public class TPC : NetworkBehaviour
     public bool canMove = true;
     private Package dataPackage;
 
+    public AudioClip deathEffect;  // Assign your sound effect in the Unity editor
+    private AudioSource audioSource;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         rotation.y = transform.eulerAngles.y;
         this.dataPackage = null;
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = deathEffect;
     }
 
     void Update()
@@ -138,8 +143,53 @@ public class TPC : NetworkBehaviour
             particleSystem.Play();
             Debug.Log("inside play called"+ particleSystem);
         }
-
+        audioSource.PlayOneShot(deathEffect);
+        Invoke("DisableGameObject", 2f);
         // Optionally, destroy the particle effect after its duration
         //Destroy(bloodSplatter, particleSystem.main.duration);
     }
+    void DisableGameObject()
+    {
+        this.gameObject.SetActive(false);
+
+        SwitchToNextClosestPlayerCamera();
+    }
+    void SwitchToNextClosestPlayerCamera()
+    {
+        GameObject[] playerCameras = GameObject.FindGameObjectsWithTag("MainCamera");
+
+        if (playerCameras.Length > 1)
+        {
+            // Find the camera associated with the player who is closest to the deceased player
+            GameObject closestCamera = FindClosestPlayerCamera();
+
+            // Activate the closest camera and deactivate the others
+            foreach (GameObject camera in playerCameras)
+            {
+                camera.SetActive(camera == closestCamera);
+            }
+        }
+    }
+
+    GameObject FindClosestPlayerCamera()
+    {
+        GameObject[] playerCameras = GameObject.FindGameObjectsWithTag("MainCamera");
+
+        GameObject closestCamera = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (GameObject camera in playerCameras)
+        {
+            float distance = Vector3.Distance(transform.position, camera.transform.position);
+
+            if (distance < closestDistance)
+            {
+                closestCamera = camera;
+                closestDistance = distance;
+            }
+        }
+
+        return closestCamera;
+    }
+
 }

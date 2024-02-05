@@ -13,7 +13,16 @@ public class BatterySurge : MonoBehaviour
     public Transform spawnSmoke;
     public Transform spawnFire;// Spawn point
     public float scatterRadius = 5f; // Radius for scattering effects
-    public float delayBeforeContinuous = 2f; // Delay before starting the continuous effect
+    public float delayBeforeContinuous = 1f; // Delay before starting the continuous effect
+
+    public AudioClip explodeEffect;  // Assign your sound effect in the Unity editor
+    private AudioSource audioSource;
+    private bool poweractive = true;
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = explodeEffect;
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -24,10 +33,11 @@ public class BatterySurge : MonoBehaviour
 
             Debug.Log("Battery count is " + batteryCount);
             // Check if the required number of batteries is reached
-            if (batteryCount >= requiredBatteryCount)
+            if (batteryCount >= requiredBatteryCount && poweractive)
             {
                 // Call the function to spawn and play particle effects
                 SpawnAndPlayParticles();
+                poweractive = false;
             }
         }
     }
@@ -56,6 +66,8 @@ public class BatterySurge : MonoBehaviour
         // Play the one-time effect
         PlayOneTimeEffect();
 
+        audioSource.PlayOneShot(explodeEffect);
+
         // Start the continuous effect after a delay
         Invoke("PlayContinuousEffect", delayBeforeContinuous);
     }
@@ -72,11 +84,8 @@ public class BatterySurge : MonoBehaviour
 
     void PlayContinuousEffect()
     {
-        // Randomly scatter the spawn position within the specified radius
-        Vector3 randomPosition = spawnSmoke.position + Random.insideUnitSphere * scatterRadius;
-
         // Spawn and play the continuous particle effect at the random position
-        GameObject continuousEffectInstance = Instantiate(continuousEffect, randomPosition, Quaternion.identity);
+        GameObject continuousEffectInstance = Instantiate(continuousEffect, spawnSmoke.position, Quaternion.identity);
         continuousEffectInstance.GetComponent<ParticleSystem>().Play();
     }
 }

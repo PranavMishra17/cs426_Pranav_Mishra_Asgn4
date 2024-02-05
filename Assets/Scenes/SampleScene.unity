@@ -963,9 +963,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1864025126301072976, guid: abb31d0124d01024fbd46cc81db5c552, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.55
+      objectReference: {fileID: 0}
     - target: {fileID: 1981518391658044542, guid: abb31d0124d01024fbd46cc81db5c552, type: 3}
       propertyPath: m_Name
       value: BAttery
+      objectReference: {fileID: 0}
+    - target: {fileID: 2719605715787995449, guid: abb31d0124d01024fbd46cc81db5c552, type: 3}
+      propertyPath: requiredBatteryCount
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8825108849959902061, guid: abb31d0124d01024fbd46cc81db5c552, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2058,7 +2066,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 94
   m_CollisionDetection: 0
 --- !u!1 &1146956209
 GameObject:

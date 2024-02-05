@@ -8,7 +8,7 @@ public class ButtonLogic : MonoBehaviour
     private ChangeState onPress;
     private ChangeState onDepress;
     private int count;
-    private GameState gameState;
+    // private GameState gameState;
 
     [SerializeField] private GameObject baseModel;
     public enum Functionality { OpenGate, UpdateGameState };
@@ -28,7 +28,7 @@ public class ButtonLogic : MonoBehaviour
     {
         if (obj.layer == LayerMask.NameToLayer("Interactables"))
         {
-            gameState.IncrementScore();
+            //gameState.IncrementScore();
         }
     }
 
@@ -36,14 +36,14 @@ public class ButtonLogic : MonoBehaviour
     {
         if (obj.layer == LayerMask.NameToLayer("Interactables"))
         {
-            gameState.DecrementScore();
+            // gameState.DecrementScore();
         }
     }
 
     void Start()
     {
         this.count = 0;
-        this.gameState = GameObject.Find("GameState").GetComponent<GameState>();
+        // this.gameState = GameObject.Find("GameState").GetComponent<GameState>();
         this.baseModel.GetComponent<MeshRenderer>().material.color = Color.red;
         if (this.buttonFunctionality == Functionality.OpenGate)
         {

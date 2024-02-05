@@ -1,53 +1,75 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class TrolleyButton : MonoBehaviour
+public class TrolleyButton : NetworkBehaviour
 {
-
     public Transform platform; // The platform that moves between point A and B
     public Transform pointA;   // Point A position
     public Transform pointB;   // Point B position
     public float moveSpeed = 5f; // Speed of the trolley
-    public float activationDistance = 3f; // Distance at which the button can be pressed
+    public float activationDistance = 7f; // Distance at which the button can be pressed
 
-    private bool movingToB = true; // Flag to indicate the direction of movement
+    // private bool movingToB = true; // Flag to indicate the direction of movement
+    private NetworkVariable<bool> movingToB = new NetworkVariable<bool>(false);
+
+    public override void OnNetworkSpawn()
+    {
+        if (this.IsOwner)
+        {
+            this.platform.position = pointA.position;
+        }
+    }
 
     void Update()
     {
         // Check if the player is near the button
-        if (IsPlayerNear())
+        if (this.IsPlayerNear())
         {
             // Check if the button is pressed (You can replace "Fire1" with your input)
             if (Input.GetButtonDown("Fire1"))
             {
-                // Toggle the direction of movement when the button is pressed
-                movingToB = !movingToB;
+                this.ChangeDirectionServerRpc();
             }
         }
+        this.MovePlatform();
+    }
 
-        // Move the platform based on the direction
-        MovePlatform();
+    [ServerRpc(RequireOwnership = false)]
+    public void ChangeDirectionServerRpc()
+    {
+        this.movingToB.Value = !this.movingToB.Value;
     }
 
     bool IsPlayerNear()
     {
-        // Assuming the player has a "Player" tag, you can customize this based on your setup
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        if (player != null)
+        if (this.IsClient)
         {
-            float distance = Vector3.Distance(player.transform.position, transform.position);
-            return distance <= activationDistance;
-        }
+            GameObject player = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject().gameObject;
 
+            if (player != null)
+            {
+                float distance = Vector3.Distance(player.transform.position, transform.position);
+                return distance <= activationDistance;
+            }
+            return false;
+        }
         return false;
     }
 
     void MovePlatform()
     {
         // Calculate the target position based on the direction
-        Transform targetPosition = movingToB ? pointB : pointA;
+        Transform targetPosition;
+        if (this.movingToB.Value)
+        {
+            targetPosition = pointB;
+        }
+        else
+        {
+            targetPosition = pointA;
+        }
 
         // Move the platform towards the target position
         platform.position = Vector3.MoveTowards(platform.position, targetPosition.position, moveSpeed * Time.deltaTime);

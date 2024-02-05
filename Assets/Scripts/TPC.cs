@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.SceneView;
 using Unity.Netcode;
 
 public class TPC : NetworkBehaviour
@@ -9,7 +8,6 @@ public class TPC : NetworkBehaviour
     public float speed = 7.5f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
-    public Transform playerCameraParent;
     public float lookSpeed = 2.0f;
     public float lookXLimit = 60.0f;
 
@@ -19,22 +17,11 @@ public class TPC : NetworkBehaviour
     Vector2 rotation = Vector2.zero;
 
     [SerializeField] private GameObject hand;
+    [SerializeField] private Camera playerCamera;
 
     [HideInInspector]
     public bool canMove = true;
     private Package dataPackage;
-
-    public AudioClip deathEffect;  // Assign your sound effect in the Unity editor
-    private AudioSource audioSource;
-
-    void Start()
-    {
-        characterController = GetComponent<CharacterController>();
-        rotation.y = transform.eulerAngles.y;
-        this.dataPackage = null;
-        audioSource = GetComponent<AudioSource>();
-        audioSource.clip = deathEffect;
-    }
 
     void Update()
     {
@@ -69,7 +56,7 @@ public class TPC : NetworkBehaviour
                 rotation.y += Input.GetAxis("Mouse X") * lookSpeed;
                 rotation.x += -Input.GetAxis("Mouse Y") * lookSpeed;
                 rotation.x = Mathf.Clamp(rotation.x, -lookXLimit, lookXLimit);
-                playerCameraParent.localRotation = Quaternion.Euler(rotation.x, 0, 0);
+                this.transform.localRotation = Quaternion.Euler(rotation.x, 0, 0);
                 transform.eulerAngles = new Vector2(0, rotation.y);
             }
 
@@ -129,7 +116,6 @@ public class TPC : NetworkBehaviour
         this.dataPackage = null;
     }
 
-
     void SpawnBloodSplatter()
     {
         Debug.Log("Blood Splatter called");
@@ -143,53 +129,42 @@ public class TPC : NetworkBehaviour
             particleSystem.Play();
             Debug.Log("inside play called"+ particleSystem);
         }
-        audioSource.PlayOneShot(deathEffect);
         Invoke("DisableGameObject", 2f);
         // Optionally, destroy the particle effect after its duration
         //Destroy(bloodSplatter, particleSystem.main.duration);
     }
-    void DisableGameObject()
-    {
-        this.gameObject.SetActive(false);
 
-        SwitchToNextClosestPlayerCamera();
-    }
-    void SwitchToNextClosestPlayerCamera()
+    public override void OnNetworkSpawn()
     {
-        GameObject[] playerCameras = GameObject.FindGameObjectsWithTag("MainCamera");
-
-        if (playerCameras.Length > 1)
+        // If the player is the owner, enable audioListener and playerCamera
+        if (this.IsOwner)
         {
-            // Find the camera associated with the player who is closest to the deceased player
-            GameObject closestCamera = FindClosestPlayerCamera();
+            characterController = GetComponent<CharacterController>();
+            rotation.y = transform.eulerAngles.y;
+            this.dataPackage = null;
+            this.transform.position = GameState.GetSpawnLoc();
 
-            // Activate the closest camera and deactivate the others
-            foreach (GameObject camera in playerCameras)
+            // Clean UI
+            Destroy(GameObject.Find("Host"));
+            Destroy(GameObject.Find("Client"));
+            Destroy(GameObject.Find("EnterCode"));
+            if (!this.IsHost)
             {
-                camera.SetActive(camera == closestCamera);
+                Destroy(GameObject.Find("JoinCode"));
             }
+            playerCamera.gameObject.SetActive(true);
+            playerCamera.enabled = true;
         }
     }
 
-    GameObject FindClosestPlayerCamera()
+    public override void OnNetworkDespawn()
     {
-        GameObject[] playerCameras = GameObject.FindGameObjectsWithTag("MainCamera");
-
-        GameObject closestCamera = null;
-        float closestDistance = float.MaxValue;
-
-        foreach (GameObject camera in playerCameras)
+        if (this.IsServer)
         {
-            float distance = Vector3.Distance(transform.position, camera.transform.position);
-
-            if (distance < closestDistance)
+            if (this.dataPackage != null)
             {
-                closestCamera = camera;
-                closestDistance = distance;
+                this.dropPackage();
             }
         }
-
-        return closestCamera;
     }
-
 }

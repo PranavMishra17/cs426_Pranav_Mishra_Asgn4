@@ -64,12 +64,10 @@ public class TrolleyButton : NetworkBehaviour
         Transform targetPosition;
         if (this.movingToB.Value)
         {
-            Debug.Log("Moving toward B");
             targetPosition = pointB;
         }
         else
         {
-            Debug.Log("Moving toward A");
             targetPosition = pointA;
         }
 

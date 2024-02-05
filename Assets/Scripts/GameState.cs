@@ -4,30 +4,15 @@ using UnityEngine;
 
 public class GameState : MonoBehaviour
 {
-    private int score;
-    private GameObject winMessage;
+    [SerializeField] private static Transform spawnLoc;
 
     void Start()
     {
-        this.winMessage = GameObject.Find("NetworkManagerUI").transform.Find("WinMessage").gameObject;
-        this.score = 0;
+        GameState.spawnLoc = this.transform.GetChild(0);
     }
 
-    public void IncrementScore()
+    public static Vector3 GetSpawnLoc()
     {
-        this.score++;
-    }
-
-    public void DecrementScore()
-    {
-        this.score--;
-    }
-
-    void Update()
-    {
-        if (this.score == 3)
-        {
-            this.winMessage.SetActive(true);
-        }
+        return GameState.spawnLoc.position;
     }
 }

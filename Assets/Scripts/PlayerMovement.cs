@@ -5,19 +5,15 @@ using Unity.Netcode;
 
 public class PlayerMovement : NetworkBehaviour
 {
-    public float speed = 3f;
-    public float rotationSpeed = 5f;
-    public float jumpForce = 300f;
-    public List<Color> colors = new List<Color>();
+    public float speed = 10f;
+    public float rotationSpeed = 70f;
+    public float jumpHeight = 5f;
 
     [SerializeField] private GameObject hand;
     [SerializeField] private AudioListener audioListener;
     [SerializeField] private Camera playerCamera;
     private Package dataPackage;
-
-    void Start() {
-        this.dataPackage = null;
-    }
+    private CharacterController charController;
 
     void Update()
     {        
@@ -28,12 +24,20 @@ public class PlayerMovement : NetworkBehaviour
             // Player Position
             if (Input.GetKey(KeyCode.W))
             {
-                moveDirection = this.transform.forward;
+                moveDirection = this.transform.forward * this.speed;
             }
             if (Input.GetKey(KeyCode.S))
             {
-                moveDirection = this.transform.forward * -1f;
+                moveDirection = this.transform.forward * -1f * this.speed;
             }
+
+            // Jumping
+            if (Input.GetButtonDown("Jump") && this.charController.isGrounded)
+            {
+                // this.transform.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * this.jumpForce);
+                moveDirection += Vector3.up * this.jumpHeight;
+            }
+            this.charController.Move(moveDirection * Time.deltaTime);
 
             // Player Rotation
             if (Input.GetKey(KeyCode.A))
@@ -44,7 +48,7 @@ public class PlayerMovement : NetworkBehaviour
             {
                 rotation = Quaternion.Euler(0f, rotationSpeed * Time.deltaTime, 0f);
             }
-            transform.position += moveDirection * speed * Time.deltaTime;
+            // transform.position += moveDirection * speed * Time.deltaTime;
             transform.rotation *= rotation;
 
             // Object Interaction
@@ -57,17 +61,14 @@ public class PlayerMovement : NetworkBehaviour
                 }
             }
             
-            // Jumping
-            if (Input.GetButtonDown("Jump"))
-            {
-                this.transform.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.up * this.jumpForce);
-            }
+            
         }
     }
 
     private void AttemptInteract()
     {
-        if (this.dataPackage) {
+        if (this.dataPackage)
+        {
             this.dropPackage();
         } else
         {
@@ -101,15 +102,16 @@ public class PlayerMovement : NetworkBehaviour
     // this method is called when the object is spawned
     public override void OnNetworkSpawn()
     {
-        // Set object color
-        GetComponent<MeshRenderer>().material.color = colors[(int)this.OwnerClientId % colors.Count];
-
         // If the player is the owner, enable audioListener and playerCamera
-        if (this.IsOwner) {
+        if (this.IsOwner)
+        {
+            this.charController = this.gameObject.GetComponent<CharacterController>();
+            this.transform.position = GameState.GetSpawnLoc();
             Destroy(GameObject.Find("Host"));
             Destroy(GameObject.Find("Client"));
             Destroy(GameObject.Find("EnterCode"));
-            if (!this.IsHost) {
+            if (!this.IsHost)
+            {
                 Destroy(GameObject.Find("JoinCode"));
             }
             audioListener.gameObject.SetActive(true);
@@ -121,8 +123,10 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void OnNetworkDespawn()
     {
-        if (this.IsServer) {
-            if (this.dataPackage != null) {
+        if (this.IsServer)
+        {
+            if (this.dataPackage != null)
+            {
                 this.dropPackage();
             }
         }

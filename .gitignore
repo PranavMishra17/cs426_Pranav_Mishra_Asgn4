@@ -11,7 +11,7 @@
 /[Uu]ser[Ss]ettings/
 /Output/
 /.vscode/
-.DS_Store
+**/.DS_Store
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data

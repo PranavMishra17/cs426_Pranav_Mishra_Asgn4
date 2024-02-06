@@ -7,6 +7,7 @@ public class fanRotation : MonoBehaviour
     public float rotationSpeed = 5f;
     public float lerpSpeed = 2f;
     private int collisionCount = 0;
+    private AudioSource ass;
 
     void Update()
     {
@@ -43,8 +44,10 @@ public class fanRotation : MonoBehaviour
         rotationSpeed = targetSpeed;
 
         // If there were two collisions, stop further rotation
-        if (collisionCount >= 4)
+        if (collisionCount >= 3)
         {
+            ass = gameObject.GetComponent<AudioSource>();
+            ass.Stop();
             //enabled = false; // Disable this script
         }
     }

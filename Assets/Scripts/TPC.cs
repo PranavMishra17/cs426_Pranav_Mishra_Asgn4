@@ -144,6 +144,10 @@ public class TPC : NetworkBehaviour
         // Optionally, destroy the particle effect after its duration
         //Destroy(bloodSplatter, particleSystem.main.duration);
     }
+    public void DisableGameObject()
+    {
+        gameObject.SetActive(false);
+    }
 
     public override void OnNetworkSpawn()
     {

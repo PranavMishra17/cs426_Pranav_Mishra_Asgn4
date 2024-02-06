@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
-public class BatterySurge : MonoBehaviour
+public class BatterySurge : NetworkBehaviour
 {
     public string batteryTag = "Battery";
     public int requiredBatteryCount = 3;
 
-    [SerializeField] GameObject gameQuestion;
+
     public GameObject oneTimeEffect; // Particle effect to play once
     public GameObject continuousEffect; // Particle effect to play continuously
     public Transform spawnSmoke;
@@ -36,8 +37,7 @@ public class BatterySurge : MonoBehaviour
             if (batteryCount >= requiredBatteryCount && poweractive)
             {
                 // Call the function to spawn and play particle effects
-                SpawnAndPlayParticles();
-                this.gameQuestion.SetActive(true);
+                SpawnAndPlayParticlesServerRpc();
                 poweractive = false;
             }
         }
@@ -62,31 +62,39 @@ public class BatterySurge : MonoBehaviour
         return batteryCount;
     }
 
-    void SpawnAndPlayParticles()
+    [ServerRpc]
+    void SpawnAndPlayParticlesServerRpc()
     {
         // Play the one-time effect
-        PlayOneTimeEffect();
+        PlayOneTimeEffectServerRpc();
 
         audioSource.PlayOneShot(explodeEffect);
 
-        // Start the continuous effect after a delay
-        Invoke("PlayContinuousEffect", delayBeforeContinuous);
+        PlayContinuousEffectServerRpc();
     }
 
-    void PlayOneTimeEffect()
+    [ServerRpc]
+    void PlayOneTimeEffectServerRpc()
     {
         // Randomly scatter the spawn position within the specified radius
         Vector3 randomPosition = spawnFire.position + Random.insideUnitSphere * scatterRadius;
 
         // Spawn and play the one-time particle effect at the random position
         GameObject oneTimeEffectInstance = Instantiate(oneTimeEffect, randomPosition, Quaternion.identity);
+        oneTimeEffectInstance.GetComponent<NetworkObject>().Spawn();
         oneTimeEffectInstance.GetComponent<ParticleSystem>().Play();
+
+
     }
 
-    void PlayContinuousEffect()
+    [ServerRpc]
+    void PlayContinuousEffectServerRpc()
     {
         // Spawn and play the continuous particle effect at the random position
         GameObject continuousEffectInstance = Instantiate(continuousEffect, spawnSmoke.position, Quaternion.identity);
+        continuousEffectInstance.GetComponent<NetworkObject>().Spawn();
         continuousEffectInstance.GetComponent<ParticleSystem>().Play();
     }
+
+
 }

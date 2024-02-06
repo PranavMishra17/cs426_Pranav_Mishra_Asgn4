@@ -23,7 +23,8 @@ public class TPC : NetworkBehaviour
     public bool canMove = true;
     private Package dataPackage;
 
-    public AudioClip deathEffect;  // Assign your sound effect in the Unity editor
+    public AudioClip deathEffect;
+    public AudioClip laughEffect; // Assign your sound effect in the Unity editor
     private AudioSource audioSource;
     private void Start()
     {
@@ -103,6 +104,7 @@ public class TPC : NetworkBehaviour
             if (Physics.Raycast(this.transform.position, this.transform.forward, out hit, 2f, LayerMask.GetMask("Interactables")))
             {
                 this.dataPackage = hit.transform.gameObject.GetComponent<Package>();
+                audioSource.PlayOneShot(laughEffect);
                 if (this.dataPackage.hasHolder())
                 {
                     this.dataPackage = null;

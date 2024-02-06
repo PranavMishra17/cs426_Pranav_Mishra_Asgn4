@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 
-public class BatterySurge : NetworkBehaviour
+public class BatterySurge : MonoBehaviour
 {
     public string batteryTag = "Battery";
     public int requiredBatteryCount = 3;
@@ -37,7 +37,7 @@ public class BatterySurge : NetworkBehaviour
             if (batteryCount >= requiredBatteryCount && poweractive)
             {
                 // Call the function to spawn and play particle effects
-                SpawnAndPlayParticlesServerRpc();
+                SpawnAndPlayParticles();
                 poweractive = false;
             }
         }
@@ -62,19 +62,17 @@ public class BatterySurge : NetworkBehaviour
         return batteryCount;
     }
 
-    [ServerRpc]
-    void SpawnAndPlayParticlesServerRpc()
+    void SpawnAndPlayParticles()
     {
         // Play the one-time effect
-        PlayOneTimeEffectServerRpc();
+        PlayOneTimeEffect();
 
         audioSource.PlayOneShot(explodeEffect);
 
-        PlayContinuousEffectServerRpc();
+        PlayContinuousEffect();
     }
 
-    [ServerRpc]
-    void PlayOneTimeEffectServerRpc()
+    void PlayOneTimeEffect()
     {
         // Randomly scatter the spawn position within the specified radius
         Vector3 randomPosition = spawnFire.position + Random.insideUnitSphere * scatterRadius;
@@ -87,8 +85,7 @@ public class BatterySurge : NetworkBehaviour
 
     }
 
-    [ServerRpc]
-    void PlayContinuousEffectServerRpc()
+    void PlayContinuousEffect()
     {
         // Spawn and play the continuous particle effect at the random position
         GameObject continuousEffectInstance = Instantiate(continuousEffect, spawnSmoke.position, Quaternion.identity);

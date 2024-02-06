@@ -129,6 +129,7 @@ MonoBehaviour:
   playerCamera: {fileID: 2510533814471704527}
   canMove: 1
   deathEffect: {fileID: 8300000, guid: b0a7df1cb470a4042a1cbe7cf8b54d26, type: 3}
+  laughEffect: {fileID: 8300000, guid: 13b79dfaea795e94485dc89d97734d81, type: 3}
 --- !u!114 &7360038702311255758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +216,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

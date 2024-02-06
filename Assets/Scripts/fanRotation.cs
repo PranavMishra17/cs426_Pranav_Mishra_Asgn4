@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class fanRotation : MonoBehaviour
@@ -8,6 +9,11 @@ public class fanRotation : MonoBehaviour
     public float lerpSpeed = 2f;
     private int collisionCount = 0;
     private AudioSource ass;
+
+    public GameObject smokeEffect; // Particle effect to play continuously
+    public Transform spawnSmoke;
+
+    public int ratsKilled = 2;
 
     void Update()
     {
@@ -44,11 +50,20 @@ public class fanRotation : MonoBehaviour
         rotationSpeed = targetSpeed;
 
         // If there were two collisions, stop further rotation
-        if (collisionCount >= 3)
+        if (collisionCount >= ratsKilled)
         {
             ass = gameObject.GetComponent<AudioSource>();
             ass.Stop();
+            PlayContinuousEffect();
             //enabled = false; // Disable this script
         }
+    }
+
+    void PlayContinuousEffect()
+    {
+        // Spawn and play the continuous particle effect at the random position
+        GameObject continuousEffectInstance = Instantiate(smokeEffect, spawnSmoke.position, Quaternion.identity);
+        continuousEffectInstance.GetComponent<NetworkObject>().Spawn();
+        continuousEffectInstance.GetComponent<ParticleSystem>().Play();
     }
 }

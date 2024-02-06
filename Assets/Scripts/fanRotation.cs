@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class fanRotation : MonoBehaviour
 {
+    public GameObject gameQuestion;
     public float rotationSpeed = 5f;
     public float lerpSpeed = 2f;
     private int collisionCount = 0;
@@ -55,6 +56,7 @@ public class fanRotation : MonoBehaviour
             ass = gameObject.GetComponent<AudioSource>();
             ass.Stop();
             PlayContinuousEffect();
+            gameQuestion.SetActive(true);
             //enabled = false; // Disable this script
         }
     }
@@ -63,7 +65,6 @@ public class fanRotation : MonoBehaviour
     {
         // Spawn and play the continuous particle effect at the random position
         GameObject continuousEffectInstance = Instantiate(smokeEffect, spawnSmoke.position, Quaternion.identity);
-        continuousEffectInstance.GetComponent<NetworkObject>().Spawn();
         continuousEffectInstance.GetComponent<ParticleSystem>().Play();
     }
 }

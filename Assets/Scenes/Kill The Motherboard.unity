@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571337, b: 0.3069219, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2678,7 +2678,11 @@ PrefabInstance:
       objectReference: {fileID: 2068781801}
     - target: {fileID: 2719605715787995449, guid: abb31d0124d01024fbd46cc81db5c552, type: 3}
       propertyPath: requiredBatteryCount
-      value: 4
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4895173770501925564, guid: abb31d0124d01024fbd46cc81db5c552, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5622321936670953498, guid: abb31d0124d01024fbd46cc81db5c552, type: 3}
       propertyPath: m_Enabled
@@ -7225,6 +7229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4b7fe05501df040a2c845b56bdd267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameQuestion: {fileID: 0}
   rotationSpeed: 500
   lerpSpeed: 5
   smokeEffect: {fileID: 0}
@@ -8488,6 +8493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef4b7fe05501df040a2c845b56bdd267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameQuestion: {fileID: 2068781801}
   rotationSpeed: 500
   lerpSpeed: 5
   smokeEffect: {fileID: 6716933543107358056, guid: 8a334e7c388e77347a1dddd727ef3446, type: 3}

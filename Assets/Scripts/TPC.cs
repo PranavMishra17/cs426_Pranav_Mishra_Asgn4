@@ -167,7 +167,7 @@ public class TPC : NetworkBehaviour
             Destroy(GameObject.Find("EnterCode"));
             if (!this.IsHost)
             {
-                Destroy(GameObject.Find("JoinCode"));
+                Destroy(GameObject.Find("Code"));
             }
             playerCamera.gameObject.SetActive(true);
             playerCamera.enabled = true;

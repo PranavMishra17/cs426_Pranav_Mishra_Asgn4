@@ -132,7 +132,7 @@ public class TPC : NetworkBehaviour
         Debug.Log("Blood Splatter called");
         // Spawn the BloodSplatter particle effect at the trigger's position and rotation
         GameObject bloodSplatter = Instantiate(bloodSplatterPrefab, transform.position, Quaternion.identity);
-        bloodSplatter.GetComponent<NetworkObject>().Spawn();
+        // bloodSplatter.GetComponent<NetworkObject>().Spawn();
         //bloodSplatter.GetComponent<NetworkObject>().GetComponent<ParticleSystem>().Play();
 
         // Play the particle effect

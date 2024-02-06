@@ -11,11 +11,11 @@ The serious objective of the game is to get the player thinking about how delica
 
 ## Some formal elements in the game are:
 
-(1) the players themselves (more than 1, up to 3) who take the role of mice on the motherboard trying to mess things up.
-(2) Power batteries act as interactable/moveable resources the players can use to deliver a high power surge to the CPU.
-(3) Various platforms and buttons in the environment allow the players to interact with and access different resources that assist with game's objective.
-(4) The CPU and cooling fan components act as triggers for the destruction of the motherboard and the end of the game.
-(5) Cats which act as guides to help the players find the necessay resources to win the game.
+1. The players themselves (more than 1, up to 3) who take the role of mice on the motherboard trying to mess things up.
+2. Power batteries act as interactable/moveable resources the players can use to deliver a high power surge to the CPU.
+3. Various platforms and buttons in the environment allow the players to interact with and access different resources that assist with game's objective.
+4. The CPU and cooling fan components act as triggers for the destruction of the motherboard and the end of the game.
+5. Cats which act as guides to help the players find the necessay resources to win the game.
 
 ## External Resources & References:
 

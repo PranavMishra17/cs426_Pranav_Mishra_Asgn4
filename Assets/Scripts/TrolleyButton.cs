@@ -13,7 +13,14 @@ public class TrolleyButton : NetworkBehaviour
 
     // private bool movingToB = true; // Flag to indicate the direction of movement
     private NetworkVariable<bool> movingToB = new NetworkVariable<bool>(false);
-
+    // Start is called before the first frame updat
+    public AudioClip belleffect; // Assign your sound effect in the Unity editor
+    private AudioSource audioSource;
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = belleffect;
+    }
     public override void OnNetworkSpawn()
     {
         if (this.IsOwner)
@@ -40,6 +47,7 @@ public class TrolleyButton : NetworkBehaviour
     public void ChangeDirectionServerRpc()
     {
         this.movingToB.Value = !this.movingToB.Value;
+
     }
 
     bool IsPlayerNear()
@@ -73,6 +81,7 @@ public class TrolleyButton : NetworkBehaviour
 
         // Move the platform towards the target position
         platform.position = Vector3.MoveTowards(platform.position, targetPosition.position, moveSpeed * Time.deltaTime);
+        audioSource.PlayOneShot(audioSource.clip);
     }
 
 }

@@ -23,6 +23,14 @@ public class TPC : NetworkBehaviour
     public bool canMove = true;
     private Package dataPackage;
 
+    public AudioClip deathEffect;  // Assign your sound effect in the Unity editor
+    private AudioSource audioSource;
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = deathEffect;
+    }
+
     void Update()
     {
         if (this.IsOwner)
@@ -79,6 +87,7 @@ public class TPC : NetworkBehaviour
         if (collision.gameObject.tag == "Fan")
         {
             SpawnBloodSplatter();
+            audioSource.PlayOneShot(deathEffect);
         }
     }
 
@@ -121,6 +130,8 @@ public class TPC : NetworkBehaviour
         Debug.Log("Blood Splatter called");
         // Spawn the BloodSplatter particle effect at the trigger's position and rotation
         GameObject bloodSplatter = Instantiate(bloodSplatterPrefab, transform.position, Quaternion.identity);
+        bloodSplatter.GetComponent<NetworkObject>().Spawn();
+        //bloodSplatter.GetComponent<NetworkObject>().GetComponent<ParticleSystem>().Play();
 
         // Play the particle effect
         var particleSystem = bloodSplatter.GetComponent<ParticleSystem>();

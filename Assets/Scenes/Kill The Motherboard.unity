@@ -565,6 +565,8 @@ MonoBehaviour:
   targetPosition: {fileID: 708884403}
   moveSpeed: 5
   plCount: 1
+  countEffect: {fileID: 0}
+  completeEffect: {fileID: 0}
 --- !u!65 &132125192
 BoxCollider:
   m_ObjectHideFlags: 0

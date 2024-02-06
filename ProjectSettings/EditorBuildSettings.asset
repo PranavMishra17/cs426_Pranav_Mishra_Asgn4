@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Kill The Motherboard.unity
+    path: Assets/Scenes/Syncing.unity
     guid: afea3812cff849c478d5d59c2a2f0b39
   m_configObjects: {}

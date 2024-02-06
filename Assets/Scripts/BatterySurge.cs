@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Netcode;
 
-public class BatterySurge : NetworkBehaviour
+public class BatterySurge : MonoBehaviour
 {
     public string batteryTag = "Battery";
     public int requiredBatteryCount = 3;
 
-
+    [SerializeField] GameObject gameQuestion;
     public GameObject oneTimeEffect; // Particle effect to play once
     public GameObject continuousEffect; // Particle effect to play continuously
     public Transform spawnSmoke;
@@ -38,6 +37,7 @@ public class BatterySurge : NetworkBehaviour
             {
                 // Call the function to spawn and play particle effects
                 SpawnAndPlayParticles();
+                this.gameQuestion.SetActive(true);
                 poweractive = false;
             }
         }
@@ -80,20 +80,13 @@ public class BatterySurge : NetworkBehaviour
 
         // Spawn and play the one-time particle effect at the random position
         GameObject oneTimeEffectInstance = Instantiate(oneTimeEffect, randomPosition, Quaternion.identity);
-        oneTimeEffectInstance.GetComponent<NetworkObject>().Spawn();
         oneTimeEffectInstance.GetComponent<ParticleSystem>().Play();
-
-        
     }
 
     void PlayContinuousEffect()
     {
         // Spawn and play the continuous particle effect at the random position
         GameObject continuousEffectInstance = Instantiate(continuousEffect, spawnSmoke.position, Quaternion.identity);
-        continuousEffectInstance.GetComponent<NetworkObject>().Spawn();
         continuousEffectInstance.GetComponent<ParticleSystem>().Play();
     }
-
-
-
 }

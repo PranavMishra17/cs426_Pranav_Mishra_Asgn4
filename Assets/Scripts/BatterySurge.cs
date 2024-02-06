@@ -8,7 +8,7 @@ public class BatterySurge : MonoBehaviour
     public string batteryTag = "Battery";
     public int requiredBatteryCount = 3;
 
-
+    public GameObject gameQuestion;
     public GameObject oneTimeEffect; // Particle effect to play once
     public GameObject continuousEffect; // Particle effect to play continuously
     public Transform spawnSmoke;
@@ -39,6 +39,7 @@ public class BatterySurge : MonoBehaviour
                 // Call the function to spawn and play particle effects
                 SpawnAndPlayParticles();
                 poweractive = false;
+                gameQuestion.SetActive(true);
             }
         }
     }
@@ -79,7 +80,6 @@ public class BatterySurge : MonoBehaviour
 
         // Spawn and play the one-time particle effect at the random position
         GameObject oneTimeEffectInstance = Instantiate(oneTimeEffect, randomPosition, Quaternion.identity);
-        oneTimeEffectInstance.GetComponent<NetworkObject>().Spawn();
         oneTimeEffectInstance.GetComponent<ParticleSystem>().Play();
 
 
@@ -89,7 +89,6 @@ public class BatterySurge : MonoBehaviour
     {
         // Spawn and play the continuous particle effect at the random position
         GameObject continuousEffectInstance = Instantiate(continuousEffect, spawnSmoke.position, Quaternion.identity);
-        continuousEffectInstance.GetComponent<NetworkObject>().Spawn();
         continuousEffectInstance.GetComponent<ParticleSystem>().Play();
     }
 

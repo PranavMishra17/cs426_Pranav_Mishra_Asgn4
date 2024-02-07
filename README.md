@@ -25,8 +25,11 @@ The serious objective of the game is to get the player thinking about how delica
 
 ## External Resources & References:
 
-- Simple FX: https://assetstore.unity.com/packages/vfx/particles/simple-fx-cartoon-particles-67834
-- UniGLTF: https://github.com/ousttrue/UniGLTF
+- Simple FX: https://assetstore.unity.com/packages/vfx/particles/simple-fx-cartoon-particles-67834  (For particle effects used)
+- UniGLTF: https://github.com/ousttrue/UniGLTF  (An importer for models of format GLTF)
 - Netcode Documentation: https://docs-multiplayer.unity3d.com/netcode/1.7.1/about/
 - Animated Cat https://assetstore.unity.com/packages/3d/characters/animals/lowpoly-toon-cat-lite-66083
 - Battery, Exhaust fans, motherboard and all models: SketchFab: https://sketchfab.com/search?features=downloadable&q=fence&type=models
+- Sound Effects: PixaBay https://pixabay.com  and  MixKit https://mixkit.co/free-sound-effects/game/
+
+  NOTE: All the assests used in this project are free to used and licensed for public work.

@@ -3,7 +3,8 @@
 
 ## KILL THE MOTHERBOARD
 
-![Gage Title](https://raw.githubusercontent.com/jmielc2/cs426_Mielczarek_Jacob_Asgn2/master/GAMETITLE.jpg?token=GHSAT0AAAAAACMSHOMPWXFYNQEDWPPKOKWOZOC3RVA)
+<!-- ![Game Title](https://raw.githubusercontent.com/jmielc2/cs426_Mielczarek_Jacob_Asgn2/master/GAMETITLE.jpg?token=GHSAT0AAAAAACMSHOMPWXFYNQEDWPPKOKWOZOC3RVA) -->
+![Game Title](https://github.com/jmielc2/cs426_Mielczarek_Jacob_Asgn2/blob/master/GAMETITLE.jpg?raw=true)
 
 ### Group Members: Jacob Mielczarek, Pranav Mishra, Alexa Osuna
 

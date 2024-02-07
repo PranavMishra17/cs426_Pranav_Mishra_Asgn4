@@ -3,7 +3,6 @@
 
 ## KILL THE MOTHERBOARD
 
-<!-- ![Game Title](https://raw.githubusercontent.com/jmielc2/cs426_Mielczarek_Jacob_Asgn2/master/GAMETITLE.jpg?token=GHSAT0AAAAAACMSHOMPWXFYNQEDWPPKOKWOZOC3RVA) -->
 ![Game Title](https://github.com/jmielc2/cs426_Mielczarek_Jacob_Asgn2/blob/master/GAMETITLE.jpg?raw=true)
 
 ### Group Members: Jacob Mielczarek, Pranav Mishra, Alexa Osuna
@@ -14,7 +13,7 @@ Our game is in line with the given theme of 'cats and computer architecture' sin
 
 The serious objective of the game is to get the player thinking about how delicate a motherboard is. By getting them to break the motherboard, we intend for the players to understand what it takes to keep a motherboard functioning properly. The final question used to assess the players knowledge is: "Name two instances when the Motherboard fails?"
 
-![Serious question](https://raw.githubusercontent.com/jmielc2/cs426_Mielczarek_Jacob_Asgn2/master/360_F_428487054_WFFP5xSVKkU2MowtcSf13pXeGSxXMgci.jpg?token=GHSAT0AAAAAACMSHOMP5H2YXL6UQCX43RUKZOC3TMA)
+![Serious question](https://github.com/jmielc2/cs426_Mielczarek_Jacob_Asgn2/blob/master/360_F_428487054_WFFP5xSVKkU2MowtcSf13pXeGSxXMgci.jpg?raw=true)
 
 ## Some formal elements in the game are:
 

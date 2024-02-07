@@ -38,6 +38,7 @@ public class TrolleyButton : NetworkBehaviour
             if (Input.GetButtonDown("Fire1"))
             {
                 this.ChangeDirectionServerRpc();
+                audioSource.PlayOneShot(audioSource.clip);
             }
         }
         this.MovePlatform();
@@ -81,7 +82,7 @@ public class TrolleyButton : NetworkBehaviour
 
         // Move the platform towards the target position
         platform.position = Vector3.MoveTowards(platform.position, targetPosition.position, moveSpeed * Time.deltaTime);
-        audioSource.PlayOneShot(audioSource.clip);
+        
     }
 
 }

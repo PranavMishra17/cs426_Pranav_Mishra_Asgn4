@@ -1133,7 +1133,7 @@ Transform:
   m_GameObject: {fileID: 191086759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 10.45}
+  m_LocalPosition: {x: 0, y: 0, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5754,7 +5754,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 70055fce1af531c4c9d382cbdcfeab77, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.001
+  m_Volume: 0.03
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -7825,7 +7825,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1.980198
+  MinDistance: 5
   MaxDistance: 85
   Pan2D: 0
   rolloffMode: 0
@@ -7891,7 +7891,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.692
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -14281,7 +14281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -14460,6 +14460,7 @@ GameObject:
   - component: {fileID: 1928617446}
   - component: {fileID: 1928617448}
   - component: {fileID: 1928617447}
+  - component: {fileID: 1928617449}
   m_Layer: 5
   m_Name: GameQuestion
   m_TagString: Untagged
@@ -14484,8 +14485,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 200}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 400, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1928617447
 MonoBehaviour:
@@ -14525,6 +14526,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928617445}
   m_CullTransparentMesh: 1
+--- !u!95 &1928617449
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1928617445}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 69d04e1e20906b74d960a13806e66a77, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1932158325
 GameObject:
   m_ObjectHideFlags: 0
@@ -15177,7 +15199,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 147}
+  m_AnchoredPosition: {x: 0, y: 122.7}
   m_SizeDelta: {x: 700, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2068781803
@@ -15200,7 +15222,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Congratualations! You killed the Motherboard! YAAAYYYY
+  m_text: 'Congratualations! You killed the Motherboard! YAAAYYYY
+
+
+
+    Question:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -15227,8 +15253,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -16443,6 +16469,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5906186638554129652, guid: 9be9f98f20e0d574db78bdea2f2ad159, type: 3}
+      propertyPath: plCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5906186638554129652, guid: 9be9f98f20e0d574db78bdea2f2ad159, type: 3}
       propertyPath: platform
       value: 
       objectReference: {fileID: 832447704}
@@ -16473,6 +16503,10 @@ PrefabInstance:
     - target: {fileID: 1422376992757262312, guid: 28633907b87a09a49a5c9a8167cb670b, type: 3}
       propertyPath: m_LocalPosition.y
       value: -1.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2328309945178241601, guid: 28633907b87a09a49a5c9a8167cb670b, type: 3}
+      propertyPath: plCount
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2328309945178241601, guid: 28633907b87a09a49a5c9a8167cb670b, type: 3}
       propertyPath: platform

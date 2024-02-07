@@ -23,7 +23,11 @@ public class Meow : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            audioSource.PlayOneShot(audioSource.clip);
+            if(!audioSource.isPlaying)
+            {
+                audioSource.PlayOneShot(audioSource.clip);
+            }
+            
         }
     }
 }

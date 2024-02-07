@@ -3,6 +3,8 @@
 
 ## KILL THE MOTHERBOARD
 
+![GAME TITLE](https://raw.githubusercontent.com/jmielc2/cs426_Mielczarek_Jacob_Asgn2/master/GAMETITLE.jpg?token=GHSAT0AAAAAACMSHOMPWXFYNQEDWPPKOKWOZOC3RVA)
+
 ### Group Members: Jacob Mielczarek, Pranav Mishra, Alexa Osuna
 
 This project is a simple game where multiple players must cooperate to accomplish a shared goal and win the game. A group of two to three players must work together to damage the motherboard/CPU. There are two ways to accomplish this task. (1) Deliver a high power surge directly to the CPU causing it to overheat and explode. (2) Stop the cooling fan from spinning, thereby, overheating and damaging the CPU. If either of these has been achieved, the final game question appears on screen and the game is over.

@@ -7,7 +7,7 @@ This project is a simple game where multiple players must cooperate to accomplis
 
 Our game is in line with the given theme of 'cats and computer architecture' since the goal of the game is to destroy the motherboard, and we have cats as a formal element which guides the player to resources needed to win the game.
 
-The serious objective of the game is to get the player thinking about how delicate a motherboard is. By getting them to break the motherboard, we intend for the players to understand what it takes to keep a motherboard functioning properly. The final question used to assess the players knowledge is: "What is one way to damage or break the motherboard?"
+The serious objective of the game is to get the player thinking about how delicate a motherboard is. By getting them to break the motherboard, we intend for the players to understand what it takes to keep a motherboard functioning properly. The final question used to assess the players knowledge is: "Name two instances when the Motherboard fails?"
 
 ## Some formal elements in the game are:
 

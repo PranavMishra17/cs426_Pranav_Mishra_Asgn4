@@ -32,4 +32,4 @@ The serious objective of the game is to get the player thinking about how delica
 - Battery, Exhaust fans, motherboard and all models: SketchFab: https://sketchfab.com/search?features=downloadable&q=fence&type=models
 - Sound Effects: PixaBay https://pixabay.com  and  MixKit https://mixkit.co/free-sound-effects/game/
 
-  NOTE: All the assests used in this project are free to used and licensed for public work.
+  NOTE: All the assests used in this project are free to use and publically available to everyone.

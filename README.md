@@ -7,12 +7,16 @@
 
 ## Assignment 4 
 I have added the following additionally for Assignment 4:
-A collision mechanic which also spawns a particle effect upon collision. This particle effect was customized by me in the Unity Engine itself. 
-A billboard beside indicating spawning the ball for collision. Also a spotlight at the same place.
-Another spotlight at one of the big buttons for battery as indicated in the video.
-Changed skybox and lighting to better suit the enviroment for the game.
 
-### Demo Video : ![DemoVideo](https://youtu.be/KHjpqXK2N3k)
+A collision mechanic which also spawns a particle effect upon collision. This particle effect was customized by me in the Unity Engine itself. 
+
+1. A billboard beside indicating spawning the ball for collision. Also a spotlight at the same place.
+
+2. Another spotlight at one of the big buttons for battery as indicated in the video.
+
+3. Changed skybox and lighting to better suit the enviroment for the game.
+
+### Demo Video : https://youtu.be/KHjpqXK2N3k
 
 ### Group Members: Jacob Mielczarek, Pranav Mishra, Alexa Osuna
 

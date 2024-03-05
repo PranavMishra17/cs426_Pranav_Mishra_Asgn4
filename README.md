@@ -5,18 +5,17 @@
 
 ![Game Title](https://github.com/jmielc2/cs426_Mielczarek_Jacob_Asgn2/blob/master/GAMETITLE.jpg?raw=true)
 
-## Assignment 4 
+## Assignment 4 | Demo: https://youtu.be/KHjpqXK2N3k
 I have added the following additionally for Assignment 4:
 
-A collision mechanic which also spawns a particle effect upon collision. This particle effect was customized by me in the Unity Engine itself. 
+1. A collision mechanic which also spawns a particle effect upon collision. This particle effect was customized by me in the Unity Engine itself. 
 
-1. A billboard beside indicating spawning the ball for collision. Also a spotlight at the same place.
+2. A billboard beside indicating spawning the ball for collision. Also a spotlight at the same place.
 
-2. Another spotlight at one of the big buttons for battery as indicated in the video.
+3. Another spotlight at one of the big buttons for battery as indicated in the video.
 
-3. Changed skybox and lighting to better suit the enviroment for the game.
+4. Changed skybox and lighting to better suit the enviroment for the game.
 
-### Demo Video : https://youtu.be/KHjpqXK2N3k
 
 ### Group Members: Jacob Mielczarek, Pranav Mishra, Alexa Osuna
 

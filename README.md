@@ -16,6 +16,7 @@ I have added the following additionally for Assignment 4:
 
 4. Changed skybox and lighting to better suit the enviroment for the game.
 
+## Assignment 2 Continued...
 
 ### Group Members: Jacob Mielczarek, Pranav Mishra, Alexa Osuna
 
